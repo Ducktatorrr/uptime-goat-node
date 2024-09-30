@@ -1,38 +1,65 @@
-import http.client
-import sys
-import json
+import logging
+import time
 import os
+import requests
+import json
+from dotenv import load_dotenv
 
-# Fetch the token from environment variables
-hex_string = os.getenv('GOAT_TOKEN')
+# Load environment variables from .env file, if present
+load_dotenv()
 
-# Ensure the token is present
-if not hex_string or len(hex_string) != 32 or not all(c in '0123456789abcdef' for c in hex_string.lower()):
-    print("Error: The GOAT_TOKEN environment variable must be set and contain a 32-character hexadecimal value.")
-    sys.exit(1)
+# Set up logging 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
-# Define the endpoint URL and path
-url = "supgoat.cryptards.lol"
-path = "/report"
+# Fetch environment variables so standalone can also be used
+GOAT_TOKEN = os.getenv("GOAT_TOKEN")
+API_URL = "https://supgoat.cryptards.lol/report"
 
-# Prepare the payload
-payload = json.dumps({'goat_id': hex_string})
+# Function to send the request using requests because is cooler
+def send_request():
+    if not GOAT_TOKEN or len(GOAT_TOKEN) != 32 or not all(c in '0123456789abcdef' for c in GOAT_TOKEN.lower()):
+        logging.error("GOAT_TOKEN must be a valid 32-character hexadecimal value")
+        return
 
-# Create a connection
-conn = http.client.HTTPSConnection(url)
+    logging.info("Submitting request to %s" % API_URL)
 
-# Set the headers
-headers = {
-    'Content-type': 'application/json'
-}
+    # Prepare the payload
+    payload = json.dumps({'goat_id': GOAT_TOKEN})
 
-# Send the HTTP POST request
-try:
-    conn.request("POST", path, payload, headers)
-    response = conn.getresponse()
-    data = response.read().decode('utf-8')
-    print(data)
-except Exception as e:
-    print(f"Error sending request: {e}")
-finally:
-    conn.close()
+    # Set the headers
+    headers = {
+        'Content-type': 'application/json'
+    }
+
+    # Send the POST request
+    try:
+        response = requests.post(API_URL, data=payload, headers=headers, timeout=30)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            logging.info("Request successful: %s" % response.text)
+        else:
+            logging.error("Request failed with status %s: %s" % (response.status_code, response.text))
+    except requests.exceptions.RequestException as err:
+        logging.error(f"Error during request: {err}")
+
+# Main loop function
+def do_loop():
+    sleep_time = 60  # Fixed 60-second interval to mimic spacerabbits cron job behavior
+    while True:
+        logging.info("⚙️ Sending goat report")
+        send_request()
+
+        logging.info("Sleeping for %s seconds" % sleep_time)
+        time.sleep(sleep_time)
+
+# Entry point of the script
+if __name__ == '__main__':
+    if not GOAT_TOKEN:
+        logging.error("GOAT_TOKEN is not defined. Please set the GOAT_TOKEN environment variable.")
+    else:
+        do_loop()
