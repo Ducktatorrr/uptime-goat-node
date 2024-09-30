@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install any needed packages
-RUN pip install --no-cache-dir requests
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Make the Python script executable
 RUN chmod +x goat-report.py
