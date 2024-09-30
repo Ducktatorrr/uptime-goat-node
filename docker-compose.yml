@@ -1,0 +1,9 @@
+services:
+  goat-report:
+    build: .
+    container_name: goat_report_service
+    restart: always
+    environment:
+      - GOAT_TOKEN=${GOAT_TOKEN}
+    volumes:
+      - ./goat-report.log:/var/log/goat-report.log
