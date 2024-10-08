@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install any needed packages and cron
-RUN apt-get update && apt-get install -y cron && pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y cron && apt-get install -y rsyslog && pip install --no-cache-dir -r requirements.txt
 
 # Add a cron job
 RUN echo "* * * * * python /usr/src/app/goat-report.py >> /var/log/goat-report.log 2>&1" > /etc/cron.d/goat-report
@@ -18,3 +18,4 @@ RUN chmod 0644 /etc/cron.d/goat-report && touch /var/log/goat-report.log
 
 # Start cron in the foreground so the container keeps running
 CMD cron -f
+CMD ["python", "/usr/src/app/goat-report.py"]
