@@ -42,8 +42,6 @@ async def send_request(session, server_name, url, previous_consecutives):
 				miner_name = data.get("name", "Unknown")
 				consecutive_number = data.get("consecutives", 0)
 				deviation_ms = data.get("ms_deviation", 0)
-				
-				print(data)
 	
 				# Check if the consecutive count has reset from non-zero to zero
 				# If this happens you're done
@@ -56,8 +54,10 @@ async def send_request(session, server_name, url, previous_consecutives):
 				logging.info(f"{server_name} OK for {miner_name}, consecutive: {consecutive_number}, deviation: {deviation_ms}ms")
 			else:
 				logging.error(f"Request failed with status {response.status} from {url}")
+	except asyncio.TimeoutError:
+		logging.error(f"TimeoutError during request to {url}. Skipping this attempt.")
 	except aiohttp.ClientError as e:
-		logging.error(f"Error during request to {url}: {e}")
+		logging.error(f"ClientError during request to {url}: {e}")
 
 # Main async loop to send requests
 async def do_loop():
