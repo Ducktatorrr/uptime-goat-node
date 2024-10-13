@@ -41,13 +41,13 @@ To run the goat report script using Docker, follow these steps:
 To stop the container, use:
 
 ```bash
-docker stop goat_uptime
+docker stop uptime_goat
 ```
 
 To remove the container:
 
 ```bash
-docker rm goat_uptime
+docker rm uptime_goat
 ```
 
 To update the container:
