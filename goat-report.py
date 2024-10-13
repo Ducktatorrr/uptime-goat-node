@@ -17,8 +17,8 @@ logging.basicConfig(
 # Fetch environment variables
 GOAT_TOKEN = os.getenv("GOAT_TOKEN", None)
 ENDPOINTS = {
-	"supgoat": "https://supgoat.cryptards.lol/report",
 	"hellogoat": "https://hellogoat.cryptards.lol/report"
+	"supgoat": "https://supgoat.cryptards.lol/report",
 }
 
 
