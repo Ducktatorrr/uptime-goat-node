@@ -1,6 +1,8 @@
 # 🐐 Goat Report Script
 
-This repository contains the `goat-report` script that periodically sends asynchronous reports to the **Cryptards** Uptimet Goat servers. It monitors consecutive goat report numbers and logs any "rug pulls" (i.e., when the count resets unexpectedly). The script is pre-built as a Docker image, making it easy to run in any environment.
+This repository contains the `goat-report` script that periodically sends asynchronous reports to the **Cryptards** Uptime Goat servers. It monitors consecutive goat report numbers and logs any "rug pulls" (i.e., when the count resets unexpectedly). The script is pre-built as a Docker image, making it easy to run in any environment.
+
+![Uptime Goat](assets/goattime.png)
 
 ## 🚀 Features
 
