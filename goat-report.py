@@ -1,68 +1,90 @@
 import logging
-import time
 import os
-import requests
-import json
+import aiohttp
+import asyncio
 from dotenv import load_dotenv
 
 # Load environment variables from .env file, if present
 load_dotenv()
 
-
-# Set up logging 
+# Set up logging
 logging.basicConfig(
 	level=logging.INFO,
 	format='%(asctime)s %(levelname)s: %(message)s',
 	datefmt='%Y-%m-%d %H:%M:%S'
 )
 
+# Fetch environment variables
+GOAT_TOKEN = os.getenv("GOAT_TOKEN", None)
+ENDPOINTS = {
+	"supgoat": "https://supgoat.cryptards.lol/report",
+	"hellogoat": "https://hellogoat.cryptards.lol/report"
+}
 
-# Fetch environment variables so standalone can also be used
-GOAT_TOKEN = os.getenv("GOAT_TOKEN")
-ENDPOINTS = ["https://hellogoat.cryptards.lol/report","https://supgoat.cryptards.lol/report"]
 
-# Function to send the request using requests because is cooler
-def send_request():
-	if not GOAT_TOKEN or len(GOAT_TOKEN) != 32 or not all(c in '0123456789abcdef' for c in GOAT_TOKEN.lower()):
-		logging.error("GOAT_TOKEN must be a valid 32-character hexadecimal value")
-		return
+# Validate GOAT_TOKEN
+if not GOAT_TOKEN or len(GOAT_TOKEN) != 32 or not all(c in '0123456789abcdef' for c in GOAT_TOKEN.lower()):
+	logging.error("GOAT_TOKEN must be a valid 32-character hexadecimal value")
+	exit(1)
 
-	for url in ENDPOINTS:
-		logging.info("Submitting request to %s" % url)
+# Initialize previous consecutive counts to detect RUGS
+previous_consecutives = {key: 0 for key in ENDPOINTS}
 
-		# Prepare the payload
-		payload = json.dumps({'goat_id': GOAT_TOKEN})
+# Function to send asynchronous requests
+async def send_request(session, server_name, url, previous_consecutives):
+	payload = {'goat_id': GOAT_TOKEN}
+	headers = {'Content-type': 'application/json'}
+	
+	try:
+		async with session.post(url, json=payload, headers=headers, timeout=30) as response:
+			if response.status == 200:
+				data = await response.json()
+				miner_name = data.get("name", "Unknown")
+				consecutive_number = data.get("consecutives", 0)
+				deviation_ms = data.get("ms_deviation", 0)
+				
+				print(data)
+	
+				# Check if the consecutive count has reset from non-zero to zero
+				# If this happens you're done
+				if previous_consecutives[server_name] > 0 and consecutive_number == 0:
+					logging.info(f"RUGGED 💀 on {server_name}")
 
-		# Set the headers
-		headers = {
-			'Content-type': 'application/json'
-		}
+				# Update the previous consecutive count
+				previous_consecutives[server_name] = consecutive_number
 
-		# Send the POST request to each endpoint
-		try:
-			response = requests.post(url, data=payload, headers=headers, timeout=30)
-
-			# Check if the request was successful
-			if response.status_code == 200:
-				logging.info("Request successful from %s: %s" % (url, response.text))
+				logging.info(f"{server_name} OK for {miner_name}, consecutive: {consecutive_number}, deviation: {deviation_ms}ms")
 			else:
-				logging.error("Request failed with status %s from %s: %s" % (response.status_code, url, response.text))
-		except requests.exceptions.RequestException as err:
-			logging.error(f"Error during request to {url}: {err}")
+				logging.error(f"Request failed with status {response.status} from {url}")
+	except aiohttp.ClientError as e:
+		logging.error(f"Error during request to {url}: {e}")
 
-# Main loop function
-def do_loop():
-	sleep_time = 60  # Fixed 60-second interval to mimic spacerabbits cron job behavior
-	while True:
-		logging.info("⚙️ Sending goat report")
-		send_request()
+# Main async loop to send requests
+async def do_loop():
+	loop = asyncio.get_event_loop()
+	initial_timestamp = loop.time()  # Get the initial timestamp in seconds
 
-		logging.info("Sleeping for %s seconds" % sleep_time)
-		time.sleep(sleep_time)
+	async with aiohttp.ClientSession() as session:
+		while True:
+			current_time = loop.time()  # Get the current event loop time in seconds
 
-# Entry point of the script
+			# Calculate how much time has passed since the script started
+			time_since_start = current_time - initial_timestamp
+			time_to_next_interval = 60 - (time_since_start % 60)
+
+			await asyncio.sleep(time_to_next_interval)
+			
+			logging.info("📯 Sending goat report")
+
+			# Send requests concurrently
+			tasks = [send_request(session, server_name, url, previous_consecutives) for server_name, url in ENDPOINTS.items()]
+			await asyncio.gather(*tasks)
+
+
 if __name__ == '__main__':
-	if not GOAT_TOKEN:
-		logging.error("GOAT_TOKEN is not defined. Please set the GOAT_TOKEN environment variable.")
-	else:
-		do_loop()
+	try:
+		logging.info("🐐 Starting goat report...")
+		logging.info("😴 Sleeping for 60 seconds to prevent drift...")
+		asyncio.run(do_loop())
+	except KeyboardInterrupt:
+		logging.info("Script interrupted by user. Exiting...")

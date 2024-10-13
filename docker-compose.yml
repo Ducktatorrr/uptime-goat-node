@@ -1,6 +1,6 @@
 services:
   goat-report:
-    build: .
+    image: ghcr.io/ducktatorrr/uptime-goat-node:latest
     container_name: goat_report_service
     restart: always
     environment:
