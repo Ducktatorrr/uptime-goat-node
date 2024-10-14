@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 import aiohttp
 import asyncio
 from dotenv import load_dotenv
@@ -15,7 +16,7 @@ logging.basicConfig(
 )
 
 # Fetch environment variables
-GOAT_TOKEN = os.getenv("GOAT_TOKEN", None)
+GOAT_ID = os.getenv("GOAT_ID", None)
 GOAT_KEY = os.getenv("GOAT_KEY", None)
 ENDPOINTS = {
 	"supgoat": "https://supgoat.cryptards.lol/report",
@@ -23,10 +24,16 @@ ENDPOINTS = {
 }
 
 
-# Validate GOAT_TOKEN
-if not GOAT_TOKEN or len(GOAT_TOKEN) != 32 or not all(c in '0123456789abcdef' for c in GOAT_TOKEN.lower()):
-	logging.error("GOAT_TOKEN must be a valid 32-character hexadecimal value")
-	exit(1)
+# Validate GOAT_ID and GOAT_KEY
+def validate_hex(value, name):
+    if not value or len(value) != 32 or not all(c in '0123456789abcdef' for c in value.lower()):
+        logging.error(f"{name} must be a valid 32-character hexadecimal value")
+        sys.exit(1)
+
+# Validate GOAT_ID and GOAT_KEY
+validate_hex(GOAT_ID, "GOAT_ID")
+validate_hex(GOAT_KEY, "GOAT_KEY")
+
 
 # Initialize previous consecutive counts to detect RUGS
 previous_consecutives = {key: 0 for key in ENDPOINTS}
@@ -34,7 +41,7 @@ previous_consecutives = {key: 0 for key in ENDPOINTS}
 # Function to send asynchronous requests
 async def send_request(session, server_name, url, previous_consecutives):
 	payload = {
-		'goat_id': GOAT_TOKEN, 
+		'goat_id': GOAT_ID, 
 		'goat_key': GOAT_KEY
 	}
 	headers = {
