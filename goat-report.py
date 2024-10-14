@@ -19,10 +19,10 @@ logging.basicConfig(
 GOAT_ID = os.getenv("GOAT_ID", None)
 GOAT_KEY = os.getenv("GOAT_KEY", None)
 ENDPOINTS = {
-	"supgoat": "https://supgoat.cryptards.lol/report",
-	"hellogoat": "https://hellogoat.cryptards.lol/report"
+    "hellogoat": "https://hellogoat.cryptards.lol/report"
+    "supgoat": "https://supgoat.cryptards.lol/report",
+    "iamgoat": "https://iamgoat.cryptards.lol/report"
 }
-
 
 # Validate GOAT_ID and GOAT_KEY
 def validate_hex(value, name):
