@@ -23,10 +23,10 @@ To run the goat report script using Docker, follow these steps:
 2. **Run the container**:
 
    ```bash
-   docker run --restart always --name uptime_goat -d -e GOAT_TOKEN=<token_here> ghcr.io/ducktatorrr/uptime-goat-node:latest
+   docker run --restart always --name uptime_goat -d -e GOAT_TOKEN=<token_here> -e GOAT_KEY=<key_here> ghcr.io/ducktatorrr/uptime-goat-node:latest
    ```
 
-   - Replace `<token_here>` with your actual 32-character hexadecimal GOAT_TOKEN.
+   - Replace `<token_here>` with your actual 32-character hexadecimal GOAT_TOKEN and GOAT_KEY.
 
    This will start the container in detached mode (`-d`), with automatic restart enabled (`--restart always`), ensuring the container always stays up.
 
@@ -88,13 +88,14 @@ If you want to run the script locally without Docker:
    cp .env.example .env
    ```
 
-5. **Open the `.env` file and set the `GOAT_TOKEN` variable**:
+5. **Open the `.env` file and set the `GOAT_TOKEN` and `GOAT_KEY` variables**:
 
    ```bash
    GOAT_TOKEN=<token_here>
+   GOAT_KEY=<key_here>
    ```
 
-   Replace `<token_here>` with your actual 32-character hexadecimal GOAT_TOKEN.
+   Replace `<token_here>` with your actual 32-character hexadecimal GOAT_TOKEN and GOAT_KEY.
 
 6. **Run the script**:
    ```bash
@@ -103,7 +104,7 @@ If you want to run the script locally without Docker:
 
 ## 🛠 Configuration
 
-- **GOAT_TOKEN**: A 32-character hexadecimal token for authenticating with the goat servers. You can pass this token as an environment variable (`-e GOAT_TOKEN=<token_here>`).
+- **GOAT_TOKEN and GOAT_KEY**: A 32-character hexadecimal token for authenticating with the goat servers. You can pass this token and key as an environment variable (`-e GOAT_TOKEN=<token_here> -e GOAT_KEY=<key_here>`).
 
 - **Endpoints**: The script sends reports to the following endpoints:
 

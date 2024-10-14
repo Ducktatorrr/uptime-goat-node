@@ -5,5 +5,6 @@ services:
     restart: always
     environment:
       - GOAT_TOKEN=${GOAT_TOKEN}
+      - GOAT_KEY=${GOAT_KEY}
     volumes:
       - ./goat-report.log:/var/log/goat-report.log

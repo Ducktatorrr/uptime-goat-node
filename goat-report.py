@@ -16,6 +16,7 @@ logging.basicConfig(
 
 # Fetch environment variables
 GOAT_TOKEN = os.getenv("GOAT_TOKEN", None)
+GOAT_KEY = os.getenv("GOAT_KEY", None)
 ENDPOINTS = {
 	"supgoat": "https://supgoat.cryptards.lol/report",
 	"hellogoat": "https://hellogoat.cryptards.lol/report"
@@ -32,8 +33,13 @@ previous_consecutives = {key: 0 for key in ENDPOINTS}
 
 # Function to send asynchronous requests
 async def send_request(session, server_name, url, previous_consecutives):
-	payload = {'goat_id': GOAT_TOKEN}
-	headers = {'Content-type': 'application/json'}
+	payload = {
+		'goat_id': GOAT_TOKEN, 
+		'goat_key': GOAT_KEY
+	}
+	headers = {
+		'Content-type': 'application/json'
+	}
 	
 	try:
 		async with session.post(url, json=payload, headers=headers, timeout=30) as response:
