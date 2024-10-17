@@ -10,6 +10,66 @@ This repository contains the `goat-report` script that periodically sends asynch
 - **Goat Monitoring**: Tracks consecutive goat report numbers and logs when these reset unexpectedly.
 - **Docker Ready**: A pre-built image is available for seamless deployment.
 
+## 🐙 Quicks tart with Docker Compose (recommended)
+
+We recommend using Docker Compose to run the script as this is the most robust.
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/yourusername/goat-report.git
+   cd goat-report
+   ```
+
+2. **Create a `.env` file**:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Open the `.env` file and set the `GOAT_ID` and `GOAT_KEY` variables**:
+
+   ```bash
+   GOAT_ID=<token_here>
+   GOAT_KEY=<key_here>
+   ```
+
+   Replace `<token_here>` with your actual 32-character hexadecimal GOAT_ID and GOAT_KEY.
+
+4. **Run the Docker Compose command**:
+
+   ```bash
+   docker compose up -d
+   ```
+
+5. **Check the logs**:
+   ```bash
+   docker compose logs -f
+   ```
+
+### Stopping & Updating the deployment
+
+To stop the deployment, use:
+
+```bash
+docker compose down
+```
+
+To update all the containers in the deployment:
+
+```bash
+docker compose pull
+docker compose up -d --build
+```
+
+To update a specific service (example Endpoint Agent):
+
+```bash
+docker compose up -d --build endpoint-agent
+```
+
+This automatically rebuilds the image and restarts the service.
+
 ## 📦 Quick Start with Docker
 
 To run the goat report script using Docker, follow these steps:
