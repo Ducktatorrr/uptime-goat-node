@@ -1,21 +1,33 @@
 services:
   goat-report:
-    build: .
+    image: python:3.11-slim
     container_name: goat_report_service
     restart: always
     environment:
-      - GOAT_ID=${GOAT_TOKEN}
+      - GOAT_ID=${GOAT_ID}
       - GOAT_KEY=${GOAT_KEY}
     volumes:
+      - ./goat_report.py:/usr/src/app/goat_report.py
+      - ./requirements.txt:/usr/src/app/requirements.txt
       - ./endpoints.json:/usr/src/app/endpoints.json
-    command: ["python", "./goat_report.py"]
+    working_dir: /usr/src/app
+    command: >
+      /bin/bash -c "
+      pip install --no-cache-dir -r requirements.txt &&
+      python ./goat_report.py"
 
   endpoint-agent:
-    build: .
+    image: python:3.11-slim
     container_name: endpoint_agent_service
     restart: always
     environment:
       - ENDPOINTS_URL=https://raw.githubusercontent.com/1rabbit/goat_servers/refs/heads/main/uptime_endpoints
     volumes:
+      - ./endpoint_agent.py:/usr/src/app/endpoint_agent.py
+      - ./requirements.txt:/usr/src/app/requirements.txt
       - ./endpoints.json:/usr/src/app/endpoints.json
-    command: ["python", "./endpoint_agent.py"]
+    working_dir: /usr/src/app
+    command: >
+      /bin/bash -c "
+      pip install --no-cache-dir -r requirements.txt &&
+      python ./endpoint_agent.py"
