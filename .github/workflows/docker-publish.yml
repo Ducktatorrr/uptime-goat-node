@@ -12,6 +12,8 @@ on:
       - completed
     paths:
       - "app/**"
+    paths-ignore:
+      - "app/docker-compose.yml"
 
 env:
   # Use docker.io for Docker Hub if empty
