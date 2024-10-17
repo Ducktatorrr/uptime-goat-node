@@ -9,7 +9,7 @@ on:
   workflow_run:
     workflows: ["Flake8"]
     types:
-      - completed
+      - [completed]
 
 env:
   # Use docker.io for Docker Hub if empty
