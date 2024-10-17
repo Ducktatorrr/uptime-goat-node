@@ -14,10 +14,16 @@ This repository contains the `goat-report` script that periodically sends asynch
 
 We recommend using Docker Compose to run the script as this is the most robust.
 
+**Prerequisites**:
+
+- Docker Compose
+- Docker
+- Git
+
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/goat-report.git
+   git clone https://github.com/Ducktatorrr/uptime-goat-node.git
    cd goat-report
    ```
 
@@ -53,6 +59,12 @@ To stop the deployment, use:
 
 ```bash
 docker compose down
+```
+
+When a new version is released pull the repository and rebuild the images:
+
+```bash
+git pull
 ```
 
 To update all the containers in the deployment:
