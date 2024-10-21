@@ -58,7 +58,7 @@ def fetch_and_update_endpoints():
             if (
                 not isinstance(key, str)
                 or not isinstance(value, str)
-                or not value.startswith("http")
+                or not value.startswith("https")
             ):
                 logging.error(
                     "Mission failed: Invalid endpoint format for "
