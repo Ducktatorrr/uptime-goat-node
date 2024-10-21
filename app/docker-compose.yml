@@ -14,6 +14,6 @@ services:
     container_name: endpoint_agent_service
     restart: always
     environment:
-      - ENDPOINTS_URL=https://raw.githubusercontent.com/1rabbit/goat_servers/refs/heads/main/uptime_endpoints
+      - ENDPOINTS_URL=${ENDPOINTS_URL}
     volumes:
       - ./endpoints.json:/app/endpoints.json
