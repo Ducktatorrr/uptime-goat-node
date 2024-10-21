@@ -38,9 +38,12 @@ We recommend using Docker Compose to run the script as this is the most robust.
    ```bash
    GOAT_ID=<token_here>
    GOAT_KEY=<key_here>
+   ENDPOINTS_URL=<PREFILLED>
    ```
 
    Replace `<token_here>` with your actual 32-character hexadecimal GOAT_ID and GOAT_KEY.
+
+   You should not change the `ENDPOINTS_URL` variable unless you know what you are doing.
 
 4. **Run the Docker Compose command**:
 
@@ -86,16 +89,16 @@ This automatically rebuilds the image and restarts the service.
 
 To run the goat report script using Docker, follow these steps:
 
-1. **Pull the pre-built Docker image**:
+1. **Pull the pre-built Docker image (strongly discouraged)**:
 
    ```bash
-   docker pull ghcr.io/ducktatorrr/uptime-goat-node:latest
+   docker pull ghcr.io/ducktatorrr/uptime-goat-node/combined:latest
    ```
 
 2. **Run the container**:
 
    ```bash
-   docker run --restart always --name uptime_goat -d -e GOAT_ID=<token_here> -e GOAT_KEY=<key_here> ghcr.io/ducktatorrr/uptime-goat-node:latest
+   docker run --restart always --name uptime_goat -d -e GOAT_ID=<token_here> -e GOAT_KEY=<key_here> -e ENDPOINTS_URL=https://raw.githubusercontent.com/1rabbit/goat_servers/refs/heads/main/uptime_endpoints ghcr.io/ducktatorrr/uptime-goat-node/combined:latest
    ```
 
    - Replace `<token_here>` with your actual 32-character hexadecimal GOAT_ID and GOAT_KEY.
@@ -125,7 +128,7 @@ docker rm uptime_goat
 To update the container:
 
 ```bash
-docker pull ghcr.io/ducktatorrr/uptime-goat-node:latest
+docker pull ghcr.io/ducktatorrr/uptime-goat-node/combined:latest
 ```
 
 Then you can start the container again with the same command as above.
@@ -137,8 +140,8 @@ If you want to run the script locally without Docker:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/goat-report.git
-   cd goat-report
+   git clone https://github.com/Ducktatorrr/uptime-goat-node.git
+   cd uptime-goat-node/app
    ```
 
 2. **Create a virtual environment and activate it**:
@@ -165,13 +168,17 @@ If you want to run the script locally without Docker:
    ```bash
    GOAT_ID=<token_here>
    GOAT_KEY=<key_here>
+   ENDPOINTS_URL=<PREFILLED>
    ```
 
    Replace `<token_here>` with your actual 32-character hexadecimal GOAT_ID and GOAT_KEY.
 
-6. **Run the script**:
+   You should not change the `ENDPOINTS_URL` variable unless you know what you are doing.
+
+6. **Run the scripts**:
    ```bash
    python goat_report.py
+   python endpoint_agent.py
    ```
 
 ## 🛠 Configuration
@@ -182,6 +189,7 @@ If you want to run the script locally without Docker:
 
   - `supgoat`: [https://supgoat.cryptards.lol/report](https://supgoat.cryptards.lol/report)
   - `hellogoat`: [https://hellogoat.cryptards.lol/report](https://hellogoat.cryptards.lol/report)
+  - `iamgoat`: [https://iamgoat.cryptards.lol/report](https://iamgoat.cryptards.lol/report)
 
   We will keep these endpoints up to date so don't touch them.
 
