@@ -66,7 +66,7 @@ def fetch_and_update_endpoints():
                 )
                 return
 
-        # Write the endpoints to a local JSON file
+        # Write the endpoints to a local JSON
         with open(ENDPOINTS_FILE_PATH, "w") as f:
             json.dump(endpoints, f, indent=2)
         logging.info("⭐ Mission: get endpoints, status: completed")
