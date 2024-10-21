@@ -15,6 +15,8 @@ on:
       - "app/requirements.txt"
       - "app/goat_report.py"
       - "!app/docker-compose.yml"
+      - "!app/Dockerfile.combined"
+      - "!app/Dockerfile.endpoint_agent"
 
 env:
   # Use docker.io for Docker Hub if empty
