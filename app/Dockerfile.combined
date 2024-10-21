@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY . .
 
@@ -8,6 +8,6 @@ RUN pip install --no-cache-dir --only-binary=:all: -r requirements.txt
 
 RUN chmod +x goat_report.py endpoint_agent.py start.sh
 
-COPY endpoints.json /usr/src/app/endpoints.json
+COPY endpoints.json /app/endpoints.json
 
-CMD ["/bin/bash", "/usr/src/app/start.sh"]
+CMD ["/bin/bash", "/app/start.sh"]

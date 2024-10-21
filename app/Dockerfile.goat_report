@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY requirements.txt goat_report.py endpoints.json ./
 
