@@ -24,7 +24,7 @@ We recommend using Docker Compose to run the script as this is the most robust.
 
    ```bash
    git clone https://github.com/Ducktatorrr/uptime-goat-node.git
-   cd app
+   cd uptime-goat-node/app
    ```
 
 2. **Create a `.env` file**:
