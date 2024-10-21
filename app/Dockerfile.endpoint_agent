@@ -1,0 +1,9 @@
+FROM python:3.11-slim
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt endpoint_agent.py endpoints.json ./
+
+RUN pip install --no-cache-dir --only-binary=:all: -r requirements.txt
+
+CMD ["python", "endpoint_agent.py"]

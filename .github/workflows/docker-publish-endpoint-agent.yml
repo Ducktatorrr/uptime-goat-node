@@ -1,4 +1,4 @@
-name: Docker
+name: Build combined
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -11,9 +11,10 @@ on:
     types:
       - completed
     paths:
-      - "app/**"
-    paths-ignore:
-      - "app/docker-compose.yml"
+      - "app/Dockerfile.endpoint_agent"
+      - "app/requirements.txt"
+      - "app/endpoint_agent.py"
+      - "!app/docker-compose.yml"
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -81,7 +82,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: .
+          context: ./app
+          file: ./app/Dockerfile.combined
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           tags: ${{ steps.meta.outputs.tags }}
