@@ -1,33 +1,23 @@
 services:
   goat-report:
-    image: python:3.11-slim
+    image: ghcr.io/ducktatorrr/uptime-goat-node/goat-report:latest
     container_name: goat_report_service
     restart: always
     environment:
       - GOAT_ID=${GOAT_ID}
       - GOAT_KEY=${GOAT_KEY}
     volumes:
-      - ./goat_report.py:/usr/src/app/goat_report.py
-      - ./requirements.txt:/usr/src/app/requirements.txt
-      - ./endpoints.json:/usr/src/app/endpoints.json
-    working_dir: /usr/src/app
-    command: >
-      /bin/bash -c "
-      pip install --no-cache-dir --only-binary=:all: -r requirements.txt &&
-      python ./goat_report.py"
+      - ./goat_report.py:/app/goat_report.py
+      - ./requirements.txt:/app/requirements.txt
+      - ./endpoints.json:/app/endpoints.json
 
   endpoint-agent:
-    image: python:3.11-slim
+    image: ghcr.io/ducktatorrr/uptime-goat-node/endpoint-agent:latest
     container_name: endpoint_agent_service
     restart: always
     environment:
       - ENDPOINTS_URL=https://raw.githubusercontent.com/1rabbit/goat_servers/refs/heads/main/uptime_endpoints
     volumes:
-      - ./endpoint_agent.py:/usr/src/app/endpoint_agent.py
-      - ./requirements.txt:/usr/src/app/requirements.txt
-      - ./endpoints.json:/usr/src/app/endpoints.json
-    working_dir: /usr/src/app
-    command: >
-      /bin/bash -c "
-      pip install --no-cache-dir -r requirements.txt &&
-      python ./endpoint_agent.py"
+      - ./endpoint_agent.py:/app/endpoint_agent.py
+      - ./requirements.txt:/app/requirements.txt
+      - ./endpoints.json:/app/endpoints.json

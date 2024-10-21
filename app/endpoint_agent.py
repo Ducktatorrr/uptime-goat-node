@@ -14,7 +14,7 @@ logging.basicConfig(
 
 # Fetch environment variables
 ENDPOINTS_URL = os.getenv("ENDPOINTS_URL")
-ENDPOINTS_FILE_PATH = "/usr/src/app/endpoints.json"
+ENDPOINTS_FILE_PATH = "/app/endpoints.json"
 
 
 # Function to check if either the ENDPOINTS_URL is set or the file exists

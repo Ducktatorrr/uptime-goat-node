@@ -19,7 +19,7 @@ logging.basicConfig(
 # Fetch environment variables
 GOAT_ID = os.getenv("GOAT_ID", None)
 GOAT_KEY = os.getenv("GOAT_KEY", None)
-ENDPOINTS_FILE_PATH = "/usr/src/app/endpoints.json"
+ENDPOINTS_FILE_PATH = "/app/endpoints.json"
 
 
 # Validate GOAT_ID and GOAT_KEY
