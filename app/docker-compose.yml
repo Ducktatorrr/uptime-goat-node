@@ -13,7 +13,7 @@ services:
     working_dir: /usr/src/app
     command: >
       /bin/bash -c "
-      pip install --no-cache-dir -r requirements.txt &&
+      pip install --no-cache-dir --only-binary=:all: -r requirements.txt &&
       python ./goat_report.py"
 
   endpoint-agent:
