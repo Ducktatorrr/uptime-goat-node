@@ -6,7 +6,7 @@ import asyncio
 import json
 from dotenv import load_dotenv
 
-# Load environment variables from .env file, if present
+# Load environment variables from .env file
 load_dotenv()
 
 # Set up logging
