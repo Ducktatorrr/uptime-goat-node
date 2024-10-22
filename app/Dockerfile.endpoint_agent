@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY requirements.txt endpoint_agent.py endpoints.json ./
 
-RUN pip install --no-cache-dir --only-binary=:all: -r requirements.txt
+RUN pip install --no-cache-dir --only-binary=:all: --extra-index-url https://www.piwheels.org/simple -r requirements.txt
 
 CMD ["python", "endpoint_agent.py"]

@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir --only-binary=:all: -r requirements.txt
+RUN pip install --no-cache-dir --only-binary=:all: --extra-index-url https://www.piwheels.org/simple -r requirements.txt
 
 RUN chmod +x goat_report.py endpoint_agent.py start.sh
 
