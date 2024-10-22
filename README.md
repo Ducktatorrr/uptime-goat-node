@@ -87,7 +87,7 @@ This automatically rebuilds the image and restarts the service.
 
 ## 📦 Quick Start with Docker (strongly discouraged)
 
-To run the goat report script using Docker, follow these steps:
+To run the goat report node using Docker, follow these steps:
 
 1. **Pull the pre-built Docker image**:
 
