@@ -85,11 +85,11 @@ docker compose up -d --build endpoint-agent
 
 This automatically rebuilds the image and restarts the service.
 
-## 📦 Quick Start with Docker
+## 📦 Quick Start with Docker (strongly discouraged)
 
 To run the goat report script using Docker, follow these steps:
 
-1. **Pull the pre-built Docker image (strongly discouraged)**:
+1. **Pull the pre-built Docker image**:
 
    ```bash
    docker pull ghcr.io/ducktatorrr/uptime-goat-node/combined:latest
