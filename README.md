@@ -1,6 +1,6 @@
-# 🐐 Goat Report Script
+# 🐐 Uptime Goat Node
 
-This repository contains the `goat-report` script that periodically sends asynchronous reports to the [**Cryptards**](https://cryptards.lol/) Uptime Goat servers. It monitors consecutive goat report numbers and logs any "rug pulls" (i.e., when the count resets unexpectedly). The script is pre-built as a Docker image, making it easy to run in any environment.
+This repository contains the `goat_report` and `endpoint_agent` scripts. The `goat_report` script periodically sends asynchronous reports to the [**Cryptards**](https://cryptards.lol/) Uptime Goat servers. The `endpoint_agent` script periodically fetches the endpoints where `goat_report` needs to send the reports to.
 
 ![Uptime Goat](assets/goattime.jpg)
 
@@ -200,6 +200,7 @@ If the request fails, the script logs the error message and retries on the next 
 ## 🎉 Contributing
 
 We welcome contributions! Feel free to submit issues, pull requests, or feature requests.
+Beware that automatic Flake8 linting is enabled so make sure your code is linted before submitting a PR.
 
 ## ⚖️ License
 
