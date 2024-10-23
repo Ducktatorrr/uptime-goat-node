@@ -10,7 +10,7 @@ This repository contains the `goat_report` and `endpoint_agent` scripts. The `go
 - **Goat Monitoring**: Tracks consecutive goat report numbers and logs when these reset unexpectedly.
 - **Docker Ready**: A pre-built image is available for seamless deployment.
 
-## 🐙 Quicks tart with Docker Compose (recommended)
+## 🐙 Quick Start with Docker Compose (recommended)
 
 We recommend using Docker Compose to run the script as this is the most robust.
 
@@ -84,6 +84,16 @@ docker compose up -d --build endpoint-agent
 ```
 
 This automatically rebuilds the image and restarts the service.
+
+## 🐋 Quick Start with balena (for the Cryptards)
+
+If you want to run this on a device like a Raspberry Pi, Orange Pi or other single board computer, you can run this app using balenaCloud for free.
+
+Simply click the "Deploy with balena" button below (you will need to create an account if you haven't already got one):
+
+[![Deploy with button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Ducktatorrr/uptime-goat-node&defaultDeviceType=raspberrypi4-64)
+
+You will then need to add a `Device Variable` with the name `GOAT_ID` and another with the name `GOAT_KEY`. The values should be set information you got from the [Onboarding - Uptime GOAT page](https://cryptards.lol/onboard). You should not change the `ENDPOINTS_URL` variable unless you know what you are doing.
 
 ## 📦 Quick Start with Docker (strongly discouraged)
 

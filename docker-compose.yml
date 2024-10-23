@@ -1,0 +1,9 @@
+version: '2.4'
+services:
+  goat:
+    image: ghcr.io/ducktatorrr/uptime-goat-node/combined:latest
+    restart: always
+    environment:
+      - GOAT_ID
+      - GOAT_KEY
+      - ENDPOINTS_URL

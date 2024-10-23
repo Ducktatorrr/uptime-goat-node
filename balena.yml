@@ -1,0 +1,47 @@
+name: "Uptime GOAT Node"
+type: "sw.application"
+version: 1.0.0
+joinable: false
+description: "Got Uptime? Could you be the Uptime GOAT? Put your uptime where your mouth is and come join the fun!"
+fleetcta: "Don't click! See instructions below."
+post-provisioning: >-
+
+  # Welcome to Uptime GOAT, Cryptards
+
+  ## Usage instructions
+
+  This isn’t your typical crypto playground—it’s a proving ground. No fast cash, no easy exits. Just 24 hours of consecutive uptime standing between you and your earnings. Here, hustle isn’t a choice; it’s a requirement.
+
+  You become an Uptime GOAT only after you achieve those 24 hours of consecutive uptime. Until then, you’re just a plebe. You’ll run a program that sends a report with your unique token every single minute. Miss a report, and you’re back to square one. The rules are straightforward... no rewards until you hit that milestone, and no cashing out until you maintain a flawless record for a full week.
+
+  Uptime GOAT is for the relentless, the obsessed, and the unapologetically committed. If you think you have what it takes, prove it. Because in Uptime GOAT, it’s uptime or nothing.
+
+  Are you in, or are you out?
+
+  ## Documentation
+
+  Please refer to the project's [links and documentation](https://cryptards.lol/onboard) for detailed instructions about the configuration of the app.
+
+assets:
+  repository:
+    type: "blob.asset"
+    data:
+      url: "https://github.com/Ducktatorrr/uptime-goat-node"
+  logo:
+    type: "blob.asset"
+    data:
+      url: "https://raw.githubusercontent.com/Ducktatorrr/uptime-goat-node/main/assets/goattime.jpg"
+data:
+  applicationConfigVariables:
+    - RESIN_HOST_CONFIG_gpu_mem: 128
+  defaultDeviceType: "raspberrypi4-64"
+  supportedDeviceTypes:
+    - "raspberrypi3"
+    - "raspberrypi3-64"
+    - "raspberrypi4-64"
+    - "raspberrypi400-64"
+    - "raspberrypi5"
+    - "jetson-nano"
+    - "jetson-nano-2gb-devkit"
+    - "intel-nuc"
+    - "orange-pi-zero"
