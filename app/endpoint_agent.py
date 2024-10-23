@@ -13,7 +13,8 @@ logging.basicConfig(
 )
 
 # Fetch environment variables
-ENDPOINTS_URL = os.getenv("ENDPOINTS_URL")
+ENDPOINTS_URL = os.getenv("ENDPOINTS_URL", "https://raw.githubusercontent.com"
+                          "/1rabbit/goat_servers/refs/heads/main/uptime_endpoints")
 ENDPOINTS_FILE_PATH = "/app/endpoints.json"
 
 
